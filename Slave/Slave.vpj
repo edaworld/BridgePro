@@ -1,0 +1,205 @@
+<!DOCTYPE Project SYSTEM "http://www.slickedit.com/dtd/vse/10.0/vpj.dtd">
+<Project
+    Version="10.0"
+    VendorName="SlickEdit"
+    TemplateName="Other C/C++"
+    WorkingDir="../">
+    <Config
+        Name="Debug"
+        Type="cpp"
+        DebugCallbackName="gdb"
+        OutputFile="%bdSlave"
+        CompilerConfigName="Latest Version">
+        <Menu>
+            <Target
+                Name="Compile"
+                MenuCaption="&amp;Compile"
+                CaptureOutputWith="ProcessBuffer"
+                OutputExts="*.o"
+                SaveOption="SaveCurrent"
+                RunFromDir="%rw">
+                <Exec CmdLine='cc -c -g %i %defd -o "%bd%n.o" "%f"'/>
+            </Target>
+            <Target
+                Name="Link"
+                MenuCaption="&amp;Link">
+                <Exec CmdLine='cc -g -o "%o" %f %libs'/>
+            </Target>
+            <Target
+                Name="Build"
+                MenuCaption="&amp;Build"
+                CaptureOutputWith="ProcessBuffer"
+                SaveOption="SaveWorkspaceFiles"
+                RunFromDir="%rw">
+                <Exec CmdLine='"%(VSLICKBIN1)vsbuild" build "%w" "%r"'/>
+            </Target>
+            <Target
+                Name="Rebuild"
+                MenuCaption="&amp;Rebuild"
+                CaptureOutputWith="ProcessBuffer"
+                SaveOption="SaveWorkspaceFiles"
+                RunFromDir="%rw">
+                <Exec CmdLine='"%(VSLICKBIN1)vsbuild" rebuild "%w" "%r"'/>
+            </Target>
+            <Target
+                Name="Debug"
+                MenuCaption="&amp;Debug"
+                SaveOption="SaveNone"
+                BuildFirst="1"
+                CaptureOutputWith="ProcessBuffer"
+                RunFromDir="%rw">
+                <Exec CmdLine='vsdebugio -prog "%o"'/>
+            </Target>
+            <Target
+                Name="Execute"
+                MenuCaption="E&amp;xecute"
+                SaveOption="SaveNone"
+                BuildFirst="1"
+                CaptureOutputWith="ProcessBuffer"
+                RunFromDir="%rw">
+                <Exec CmdLine='"%o"'/>
+            </Target>
+        </Menu>
+    </Config>
+    <Config
+        Name="Release"
+        Type="cpp"
+        DebugCallbackName="gdb"
+        OutputFile="%bdSlave"
+        CompilerConfigName="Latest Version">
+        <Menu>
+            <Target
+                Name="Compile"
+                MenuCaption="&amp;Compile"
+                CaptureOutputWith="ProcessBuffer"
+                SaveOption="SaveCurrent"
+                OutputExts="*.o"
+                RunFromDir="%rw">
+                <Exec CmdLine='cc -c -O %i %defd -o "%bd%n.o" "%f"'/>
+            </Target>
+            <Target
+                Name="Link"
+                MenuCaption="&amp;Link">
+                <Exec CmdLine='cc -O -o "%o" %f %libs'/>
+            </Target>
+            <Target
+                Name="Build"
+                MenuCaption="&amp;Build"
+                CaptureOutputWith="ProcessBuffer"
+                SaveOption="SaveWorkspaceFiles"
+                RunFromDir="%rw">
+                <Exec CmdLine='"%(VSLICKBIN1)vsbuild" build "%w" "%r"'/>
+            </Target>
+            <Target
+                Name="Rebuild"
+                MenuCaption="&amp;Rebuild"
+                CaptureOutputWith="ProcessBuffer"
+                SaveOption="SaveWorkspaceFiles"
+                RunFromDir="%rw">
+                <Exec CmdLine='"%(VSLICKBIN1)vsbuild" rebuild "%w" "%r"'/>
+            </Target>
+            <Target
+                Name="Debug"
+                MenuCaption="&amp;Debug"
+                SaveOption="SaveNone"
+                BuildFirst="1"
+                CaptureOutputWith="ProcessBuffer"
+                RunFromDir="%rw">
+                <Exec CmdLine='vsdebugio -prog "%o"'/>
+            </Target>
+            <Target
+                Name="Execute"
+                MenuCaption="E&amp;xecute"
+                SaveOption="SaveNone"
+                BuildFirst="1"
+                CaptureOutputWith="ProcessBuffer"
+                RunFromDir="%rw">
+                <Exec CmdLine='"%o"'/>
+            </Target>
+        </Menu>
+    </Config>
+    <Rules Name="Compile">
+        <Rule
+            InputExts="*.s"
+            OutputExts="*.o"
+            LinkObject="1">
+            <Exec CmdLine='as -o "%bd%n.o" "%f"'/>
+        </Rule>
+    </Rules>
+    <CustomFolders>
+        <Folder
+            Name="Source Files"
+            Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.c++;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl;*.d;*.m;*.mm;*.go"
+            GUID="{E7DE96EA-D62C-473C-3257-0481EDBCDF9F}"></Folder>
+        <Folder
+            Name="Header Files"
+            Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.h++;*.inc;*.sh;*.cpy;*.if"
+            GUID="{C22504F3-E86C-4A6C-D156-1D6673C800AE}"></Folder>
+        <Folder
+            Name="Resource Files"
+            Filters="*.ico;*.cur;*.dlg"
+            GUID="{278C1F15-3A79-431E-6BCE-ED5103CA81AE}"/>
+        <Folder
+            Name="Bitmaps"
+            Filters="*.bmp"
+            GUID="{EA86CA84-578B-470B-AD04-B4F36FEDDEA3}"/>
+        <Folder
+            Name="Other Files"
+            Filters=""
+            GUID="{3831869B-75DF-47C0-2F08-5DD5CEBF5898}"></Folder>
+    </CustomFolders>
+    <Files AutoFolders="DirectoryView">
+        <Folder Name="../RTE">
+            <Folder Name="Device">
+                <Folder Name="STM32F103C8">
+                    <F N="../RTE/Device/STM32F103C8/RTE_Device.h"/>
+                    <F N="../RTE/Device/STM32F103C8/RTE_Device.h.0000"/>
+                    <F N="../RTE/Device/STM32F103C8/startup_stm32f10x_md.s"/>
+                    <F N="../RTE/Device/STM32F103C8/stm32f10x_conf.h"/>
+                    <F N="../RTE/Device/STM32F103C8/system_stm32f10x.c"/>
+                </Folder>
+            </Folder>
+            <F N="../RTE/RTE_Components.h"/>
+        </Folder>
+        <Folder Name="../Source">
+            <Folder Name="UpDrive">
+                <F N="../Source/UpDrive/bsp.c"/>
+                <F N="../Source/UpDrive/bsp.h"/>
+                <F N="../Source/UpDrive/bsp_adc.c"/>
+                <F N="../Source/UpDrive/bsp_adc.h"/>
+                <F N="../Source/UpDrive/bsp_led.c"/>
+                <F N="../Source/UpDrive/bsp_led.h"/>
+                <F N="../Source/UpDrive/bsp_oledio.c"/>
+                <F N="../Source/UpDrive/bsp_oledio.h"/>
+                <F N="../Source/UpDrive/bsp_power.c"/>
+                <F N="../Source/UpDrive/bsp_power.h"/>
+                <F N="../Source/UpDrive/bsp_rf.c"/>
+                <F N="../Source/UpDrive/bsp_rf.h"/>
+                <F N="../Source/UpDrive/bsp_slavemsg.c"/>
+                <F N="../Source/UpDrive/bsp_slavemsg.h"/>
+                <F N="../Source/UpDrive/bsp_spi1.c"/>
+                <F N="../Source/UpDrive/bsp_spi1.h"/>
+                <F N="../Source/UpDrive/bsp_spi2.c"/>
+                <F N="../Source/UpDrive/bsp_spi2.h"/>
+                <F N="../Source/UpDrive/bsp_sx1276-LoRa.c"/>
+                <F N="../Source/UpDrive/bsp_sx1276-LoRa.h"/>
+                <F N="../Source/UpDrive/bsp_systimer.c"/>
+                <F N="../Source/UpDrive/bsp_systimer.h"/>
+                <F N="../Source/UpDrive/bsp_task.c"/>
+                <F N="../Source/UpDrive/bsp_task.h"/>
+                <F N="../Source/UpDrive/bsp_timer.c"/>
+                <F N="../Source/UpDrive/bsp_timer.h"/>
+                <F N="../Source/UpDrive/bsp_tpc.c"/>
+                <F N="../Source/UpDrive/bsp_tpc.h"/>
+                <F N="../Source/UpDrive/bsp_uart_fifo.c"/>
+                <F N="../Source/UpDrive/bsp_uart_fifo.h"/>
+                <F N="../Source/UpDrive/bsp_userlib.c"/>
+                <F N="../Source/UpDrive/bsp_userlib.h"/>
+            </Folder>
+            <Folder Name="UserCode">
+                <F N="../Source/UserCode/main.c"/>
+            </Folder>
+        </Folder>
+        <F N="Slave.vpj"/>
+    </Files>
+</Project>
