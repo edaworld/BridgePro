@@ -31,7 +31,7 @@ void bsp_Init(void)
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4); //初始化中断优先级
 
     LED_Init(); //初始化Led的GPIO
-    bsp_POWER_Init(); //初始化一键开关机电路的IO口
+//    bsp_POWER_Init(); //初始化一键开关机电路的IO口
     
 	/*初始化定时器*/
     SysTickTimer_Init();    //初始化系统滴答定时器 (此函数会开中断)

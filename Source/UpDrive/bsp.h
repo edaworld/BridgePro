@@ -58,7 +58,8 @@
 #include "bsp_rf.h"
 #include "bsp_power.h"
 #include "bsp_adc.h"
-
+#include "bsp_i2c_ee.h"
+#include "bsp_ad5933.h"
 
 //位带操作,实现51类似的GPIO控制功能,IO口操作宏定义
 #define BITBAND(addr, bitnum)   ((addr & 0xF0000000)+0x2000000+((addr &0xFFFFF)<<5)+(bitnum<<2))

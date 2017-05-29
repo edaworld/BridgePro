@@ -437,6 +437,11 @@
               <FileType>1</FileType>
               <FilePath>.\Source\UpDrive\bsp_power.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_ad5933.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\UpDrive\bsp_ad5933.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -476,6 +481,11 @@
               <FileName>bsp_uartpro.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Source\UpDrive\bsp_uartpro.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_i2c_ee.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\UpDrive\bsp_i2c_ee.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -524,6 +534,12 @@
       </component>
       <component Cclass="Device" Cgroup="StdPeriph Drivers" Csub="GPIO" Cvendor="Keil" Cversion="3.5.0" condition="STM32F1xx STDPERIPH RCC">
         <package name="STM32F1xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.0.0"/>
+        <targetInfos>
+          <targetInfo name="Slave"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="StdPeriph Drivers" Csub="I2C" Cvendor="Keil" Cversion="3.5.0" condition="STM32F1xx STDPERIPH RCC">
+        <package name="STM32F1xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
         <targetInfos>
           <targetInfo name="Slave"/>
         </targetInfos>

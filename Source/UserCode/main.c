@@ -49,13 +49,13 @@ int main(void)
     LED_SMT_GREEN = 1;
     LED_RED = 1;
     LED_SMT_WHITE = 1;
-    bsp_StartMachine();
+//    bsp_StartMachine();
 	while (1)
 	{
-		if (GPIO_ReadInputDataBit(GPIOB, RF_IRQ_PIN)) //SPI的SX1278，接收到数据时，IRQ引脚为高
-		{
-			LoraPinisHigh = TRUE;
-		}
+//		if (GPIO_ReadInputDataBit(GPIOB, RF_IRQ_PIN)) //SPI的SX1278，接收到数据时，IRQ引脚为高
+//		{
+//			LoraPinisHigh = TRUE;
+//		}
 		bsp_Idle();       
 	}
 }
