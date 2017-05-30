@@ -1,7 +1,7 @@
 #ifndef  __TASK__H__
 #define  __TASK__H__
 #include "bsp_tpc.h"
-#pragma anon_unions             //使用匿名结构体
+#pragma anon_unions //使用匿名结构体
 
 /********************************************************************************************************
 * 宏定义
@@ -39,6 +39,7 @@ static void Task_RecvfromLora(void); //从Lora（SX1278）所连接的串口2读取数据任务
 static void Task_KeyScan(void); //扫描一键开机键的任务
 static void Task_PowerCtl(void); //控制关机任务
 static void Task_ADCProcess(void); //ADC采集串联分压电阻获得电量程序
+static void Task_ReadAD5933(void); //从AD5933读取电阻抗数据任务
 /********************************************************************************************************
 * 全局函数
 ********************************************************************************************************/

@@ -4,7 +4,7 @@
  *      *** Do not modify ! ***
  *
  * Project: 'LoraMulti' 
- * Target:  'Slave' 
+ * Target:  'BridgePro' 
  */
 
 #ifndef RTE_COMPONENTS_H

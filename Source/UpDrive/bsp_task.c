@@ -18,23 +18,27 @@ uint8_t BlEisReady = FALSE; //进入串口，同时接收到了正确的数据，标志位
 SLVMSG_T s_tSlaMsg; //STM32发送从机数据的结构体,见bsp_slavemsg.h
 uint8_t KeyScan(void); //基于状态机的按键扫描函数
 /************************任务结构体说明*************************************/
-//typedef struct _TPC_TASK
-//{
-//	uint8_t   attrb;  //静态任务：0，动态任务：1
-//	uint8_t   Run;  // 程序运行标记，0：不运行，1：运行xternt
-//	uint16_t  Timer;  // 计时器
-//	uint16_t  ItvTime;  // 任务运行间隔时间
-//	void      (*Task)(void); // 要运行的任务函数
-//} TPC_TASK; // 任务定义
-
-TPC_TASK TaskComps[4] =
+/**
+typedef struct _TPC_TASK
+{
+	uint8_t   attrb;  //静态任务：0，动态任务：1
+	uint8_t   Run;  // 程序运行标记，0：不运行，1：运行xternt
+	uint16_t  Timer;  // 计时器
+	uint16_t  ItvTime;  // 任务运行间隔时间
+	void      (*Task)(void); // 要运行的任务函数
+} TPC_TASK; // 任务定义
+**/
+/************************任务结构体说明*************************************/
+TPC_TASK TaskComps[5] =
 {
     //添加新任务时，请注意单个任务中改变任务属性的代码
     { 0, 0, 10, 1000, Task_LEDDisplay }, // 静态任务，LED闪烁任务，时间片到达即可执行
     { 0, 0, 1, 2, Task_RecvfromLora }, // 静态任务，处理从SPI接口的SX127 8接收的数据任务，时间片到达即可执行
     { 1, 0, 100, 0, Task_SendToMaster }, // 动态任务，收到广播信号，发送从机数据到主机
-//    { 0, 0, 1, 1, Task_RecvfromUart }, // 静态任务,通过串口从CC2541接收数据任务
     { 0, 0, 1, 10, Task_KeyScan }, // 按键扫描任务
+    { 0, 0, 1, 10, Task_ReadAD5933 }, // 读取AD5933任务
+    
+//    { 0, 0, 1, 1, Task_RecvfromUart }, // 静态任务,通过串口从CC2541接收数据任务    
 //	{ 0, 0, 2, 8, Task_PowerCtl }, // 按键扫描任务
 //	{ 0, 0, 3, 10, Task_ADCProcess} //采集电池电量任务
 };
@@ -55,11 +59,36 @@ void TaskInit(void)
 *   形    参: 无
 *   返 回 值: 无
 *********************************************************************************************************/
-
 void Task_LEDDisplay(void)
 {
     LED_SMT_WHITE = !LED_SMT_WHITE; //白色LED D7
 }
+/*********************************************************************************************************
+*   函 数 名: Task_ReadAD5933
+*   功能说明: 读取AD5933电阻抗数据任务
+*   形    参: 无
+*   返 回 值: 无
+*********************************************************************************************************/
+static unsigned char temp;
+static unsigned int real, img;
+void Task_ReadAD5933(void)
+{
+    AD5933_Set_Mode_Freq_Start();
+    if((AD5933_Get_DFT_ST() & 0x04) != 0x04)
+    {
+        while(1)//wait for DFT finish
+        {
+            temp = AD5933_Get_DFT_ST();
+            if( temp & 0x02)//实部和虚部有效
+                break;
+        }
+        real = AD5933_Get_Real();
+        img  = AD5933_Get_Img();
+        AD5933_Set_Mode_Freq_UP();
+        printf("$%04X%04X#", real, img);
+    }
+}
+
 /*********************************************************************************************************
 *   函 数 名: Task_ADCProcess
 *   功能说明: 采集电池电量任务,10ms调用一次

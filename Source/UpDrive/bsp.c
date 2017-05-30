@@ -57,7 +57,9 @@ void bsp_Init(void)
     RFGPIOInit();
 	RFInit();    //射频模块初始化
 	RFRxMode();  //进入接收模式
-
+	/*初始化AD5933*/
+    I2C_EE_Init();
+    Init_AD5933();
 }
 
 /*
