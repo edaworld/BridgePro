@@ -6,40 +6,57 @@
  *----------------------------------------------------------------------------*/
 
 #include "stm32f10x.h"
-/*----------------------------------------------------------------------------*
- * 宏定义                                                                     *
- *----------------------------------------------------------------------------*/
-#define LED_IMAGE_WHITE       1
-#define LED_IMAGE_BLACK       0
+/***
+ *SPI1硬件驱动SSD1306 OLED 
+ *模块是4线SPI接口 片选已经硬件置低
+ *D/C拉高代表输入数据 拉低代表输入命令
+ *SDA:数据输入 SCL:时钟输入
+ ****/
+#define     RCC_APB2Periph_OLED_PORT        RCC_APB2Periph_GPIOA
+#define     OLED_DC      PBout(1)
+#define     OLED_RST     PBout(0)
+#define     OLED_PORT    GPIOA
 
-#define LED_MAX_ROW_NUM      64
-#define LED_MAX_COLUMN_NUM  128
+#define     OLED_SCL_PIN					GPIO_Pin_5
+#define	    OLED_SDA_PIN					GPIO_Pin_7 
 
-/*----------------------------------------------------------------------------*
- * 全局变量                                                                   *
- *----------------------------------------------------------------------------*/
+#define     XLevelL		    0x00
+#define     XLevelH		    0x10
+#define     XLevel		    ((XLevelH&0x0F)*16+XLevelL)
+#define     Max_Column	    128
+#define     Max_Row		    64
+#define	    Brightness	    0xCF
+#define     X_WIDTH         128
+#define     Y_WIDTH         64
+#define		  Page			8
 
-/*----------------------------------------------------------------------------*
- * 内部函数原型                                                               *
- *----------------------------------------------------------------------------*/
+void OLED_WB(uint8_t data);
+/*********************LCD写数据************************************/ 
+void OLED_WrDat(uint8_t data);
+/*********************LCD写命令************************************/
+void OLED_WrCmd(uint8_t cmd);
+/*********************设定坐标************************************/
+void OLED_Set_Pos(uint8_t x, uint8_t y);
+/*********************LCD全屏操作************************************/
+void OLED_Fill(unsigned char bmp_dat);
+/*********************LCD复位************************************/
+void OLED_CLS(void);
+/*********************LCD对应IO控制口初始化************************************/
+void OLEDIO_Init(void);
+/*********************LCD初始化************************************/
+void OLED_Init(void);
+/*********************延时函数***********************/
+void LCD_DLY_ms(unsigned int ms);
+/*****************功能描述：显示6*8一组标准ASCII字符串	显示的坐标（x,y），y为页范围0～7****************/
+void LCD_P6x8Str(unsigned char x,unsigned char y,unsigned char ch[]);
+/*****************功能描述：显示8*16一组标准ASCII字符串	 显示的坐标（x,y），y为页范围0～7****************/
+void LCD_P8x16Str(unsigned char x,unsigned char y,unsigned char ch[]);
+/*****************功能描述：显示16*16点阵  显示的坐标（x,y），y为页范围0～7****************************/
+void LCD_P16x16Ch(unsigned char x,unsigned char y,unsigned char N);
+/*****************功能描述：显示32*32点阵  显示的坐标（x,y），y为页范围0～7****************************/
+void LCD_P32x32Ch(unsigned char x,unsigned char y,unsigned char N);
+/*****************功能描述：显示显示BMP图片128×64起始点坐标(x,y),x的范围0～127，y为页的范围0～7*****************/
+void Draw_BMP(unsigned char x0, unsigned char y0,unsigned char x1,unsigned char y1,unsigned char const BMP[]);
 
-/*----------------------------------------------------------------------------*
- * 外部函数原型                                                               *
- *----------------------------------------------------------------------------*/
-extern void OLEDIO_Init(void); 
-extern void OLED_Init(void);
-extern void OLED_Fill(uint8_t ucData);
-extern void OLED_SetPos(uint8_t ucIdxX, uint8_t ucIdxY); 
-extern void OLED_P6x8Char(uint8_t ucIdxX,uint8_t ucIdxY,uint8_t ucData);   //显示一个6x8标准ASCII字符
-extern void OLED_P6x8Str(uint8_t ucIdxX,uint8_t ucIdxY,int8_t ucDataStr[]);
-extern void OLED_P8x16Str(uint8_t ucIdxX,uint8_t ucIdxY,int8_t ucDataStr[]);  //写入一组8x16标准ASCII字符串
-extern void OLED_P14x16Str(uint8_t ucIdxX,uint8_t ucIdxY,int8_t ucDataStr[]);	  //写入一组14x16的中文字符串（字符串表格中需含有此字）
-extern void OLED_PXx16MixStr(uint8_t ucIdxX, uint8_t ucIdxY, int8_t ucDataStr[]); //输出14x16汉字和字符混合字符串 （字符串表格中需含有此字）
-extern void OLED_Fill(uint8_t ucData);
-extern void OLED_PrintChar(uint8_t ucIdxX, uint8_t ucIdxY, int8_t cData);
-extern void OLED_PrintShort(uint8_t ucIdxX, uint8_t ucIdxY, int16_t sData);
-extern void OLED_PrintImage(uint8_t *pucTable, uint16_t usRowNum, uint16_t usColumnNum);
-
-extern void OLEDPrint(int x,int y,char *msg);
 #endif
 

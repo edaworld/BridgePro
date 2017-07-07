@@ -20,46 +20,11 @@
  */
 #ifndef __SX1276_LORA_H__
 #define __SX1276_LORA_H__
-   
-/*   
-  #define LED_TX           PD_ODR_ODR7
-#define LED_RX           PD_ODR_ODR6
 
-#define MODE_CTRL1           PB_ODR_ODR2
-#define MODE_CTRL2           PB_ODR_ODR1
-
-#define STATUS_AUX           PB_ODR_ODR0
-
-#define RF_RESET             PD_ODR_ODR5
-#define RF_IRQ             PC_ODR_ODR4
-#define RF_NSS             PD_ODR_ODR4
-
-
-
-#define RF_RST        PD_ODR_ODR5//pc5--rf rst
-#define RF_SCK        PB_ODR_ODR5//
-#define RF_MISO       PB_IDR_IDR7 //INPUT
-#define RF_MOSI       PB_ODR_ODR6 
-#define RF_NSEL_PIN   PD_ODR_ODR4//pb4 ---片选
-#define RF_RXTXSWITH  PB_ODR_ODR3//天线开关
-
-
-#define SCK        PB_ODR_ODR5
-#define MISO       PB_IDR_IDR7 //INPUT
-#define MOSI       PB_ODR_ODR6 
-#define nCS   PD_ODR_ODR4
-#define RF_RXTXSWITH  PB_ODR_ODR3
-
-
-#define RF_IRQ_DIO0       PC_IDR_IDR4
-
-
- */
-#define	RF_GPIO	     GPIOB
-#define	RF_SEL_PIN	 GPIO_Pin_12
-#define RF_IRQ_PIN	 GPIO_Pin_10
-#define RF_RST	     GPIO_Pin_8        //XL1278-SD01 REST
-#define	RF_RST_1     GPIO_Pin_11       //xl1278-smt rest 
+#define	RF_SEL_PIN	 GPIO_Pin_12        //此引脚为RF_CSN引脚
+#define RF_IRQ_PIN	 GPIO_Pin_2         //此引脚为中断引脚
+#define RF_RST	     GPIO_Pin_8         //XL1278-SD01 RESET
+#define	RF_RST_1     GPIO_Pin_11        //xl1278-smt rest 
 
 //-----------------------------------------------------------------------------
 // 子程序声明
